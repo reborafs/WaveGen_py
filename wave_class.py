@@ -9,7 +9,7 @@ class Wave():
         self.fs = 44100
         self.freq = freq
         self.time = duration
-        self.timevector = np.linspace(0, self.time, self.fs*self.time)
+        self.timevector = np.linspace(0, self.time, round(self.fs*self.time))
         self.wave = np.zeros_like(self.timevector)
         self.wave_type = wave_type
         if wave_type == 'sine':
@@ -28,10 +28,10 @@ class Wave():
     def square(self):
         half_cycle = round(self.fs/(2* self.freq))
         self.wave = np.hstack((np.ones(half_cycle),(-1)*np.ones(half_cycle)))
-        while len(self.wave) <= self.time*self.fs:
+        while len(self.wave) <= round(self.time*self.fs):
             cycle = np.hstack((np.ones(half_cycle),(-1)*np.ones(half_cycle)))
             self.wave = np.hstack((self.wave, cycle))
-        self.wave = self.wave[:self.time*self.fs]
+        self.wave = self.wave[:round(self.time*self.fs)]
             
     def triangle(self, harmonics = 10):
         series = np.zeros_like(self.timevector)
@@ -80,7 +80,7 @@ class Wave():
         
 #------------------------------------TEST------------------------------------#
 
-freq = 200
+freq = 100
 time = 2
 wave_type = 'sawtooth'
 test = Wave(freq, time, wave_type)
