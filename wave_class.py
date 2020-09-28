@@ -80,11 +80,11 @@ class Wave():
         
 #------------------------------------TEST------------------------------------#
 
-freq = 100
-time = 2
-wave_type = 'sawtooth'
-test = Wave(freq, time, wave_type)
-plt.plot(test.timevector, test.wave)
+# freq = 100
+# time = 2
+# wave_type = 'sawtooth'
+# test = Wave(freq, time, wave_type)
+# plt.plot(test.timevector, test.wave)
 # plt.xlim(0, 0.02)
 
 
