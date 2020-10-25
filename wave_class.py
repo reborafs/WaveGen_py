@@ -9,8 +9,8 @@ class Wave():
         self.fs = 44100
         self.freq = freq
         self.time = duration
-        self.timevector = np.linspace(0, self.time, round(self.fs*self.time))
-        self.wave = np.zeros_like(self.timevector)
+        self.time_vector = np.linspace(0, self.time, round(self.fs*self.time))
+        self.wave = np.zeros_like(self.time_vector)
         self.wave_type = wave_type
         if wave_type == 'sine':
             self.sine()
@@ -22,7 +22,7 @@ class Wave():
             self.sawtooth()
         
     def sine(self):
-        self.wave = 0.5*np.sin(2*np.pi*self.freq*self.timevector)
+        self.wave = 0.5*np.sin(2*np.pi*self.freq*self.time_vector)
         self.wave_type = 'sine'
     
     def square(self):
@@ -34,18 +34,18 @@ class Wave():
         self.wave = self.wave[:round(self.time*self.fs)]
             
     def triangle(self, harmonics = 10):
-        series = np.zeros_like(self.timevector)
+        series = np.zeros_like(self.time_vector)
         for i in range(0, harmonics):
             n = (2*i)+1
             arg = 2 * np.pi * self.freq * n
-            series += (((-1)**i)*np.sin(arg*self.timevector))/(n**2)
+            series += (((-1)**i)*np.sin(arg*self.time_vector))/(n**2)
         self.wave = (8/(np.pi**2)) * series
         
     def sawtooth(self, harmonics = 100):
-        series = np.zeros_like(self.timevector)
+        series = np.zeros_like(self.time_vector)
         for k in range(1, harmonics):
             arg = 2 * np.pi * self.freq * k
-            series += (((-1)**k)*np.sin(arg*self.timevector))/k
+            series += (((-1)**k)*np.sin(arg*self.time_vector))/k
         self.wave = (1/2) - (1/np.pi) * series
     
     def samplerate(self, fs):
@@ -73,7 +73,7 @@ class Wave():
         sf.write('wave.wav', self.wave, self.fs)
         
     def plot(self):
-        plt.plot(self.timevector, self.wave)
+        plt.plot(self.time_vector, self.wave)
         plt.xlim(0, 0.02)
         plt.ylim(-1, 1)
         
@@ -84,7 +84,7 @@ class Wave():
 # time = 2
 # wave_type = 'sawtooth'
 # test = Wave(freq, time, wave_type)
-# plt.plot(test.timevector, test.wave)
+# plt.plot(test.time_vector, test.wave)
 # plt.xlim(0, 0.02)
 
 
